@@ -1,0 +1,25 @@
+main: pl.bartixen.bxauth.Main
+version: 2.0.1
+author: Bartixen
+name: BxAuth
+api-version: 1.16
+website: https://bartixen.pl
+depend: [UserLogin, FastLogin]
+
+commands:
+  login:
+  zaloguj:
+  reg:
+  register:
+  zarejestruj:
+  logut:
+  wyloguj:
+  unregister:
+  odrejestruj:
+  unreg:
+  auth:
+  bxauth:
+  changepass:
+  changepassword:
+  multi:
+  multikonta:
