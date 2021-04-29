@@ -1,25 +1,42 @@
 main: pl.bartixen.bxauth.Main
-version: 2.0.2
+version: 2.1.1
 author: Bartixen
 name: BxAuth
 api-version: 1.16
 website: https://bartixen.pl
+description: Plugin na uwierzytelnianie graczy (AutoLogin Premium)
 depend: [UserLogin, FastLogin]
 
 commands:
   login:
+    description: Loguje gracza na serwerze
   zaloguj:
+    description: Loguje gracza na serwerze
   reg:
+    description: Rejestruje gracza na serwerze
   register:
+    description: Rejestruje gracza na serwerze
   zarejestruj:
+    description: Rejestruje gracza na serwerze
   logut:
+    description: Wylogowuje gracza
   wyloguj:
+    description: Wylogowuje gracza
   unregister:
+    description: Odrejestrowuje gracza
   odrejestruj:
+    description: Odrejestrowuje gracza
   unreg:
+    description: Odrejestrowuje gracza
   auth:
+    description: Pokazuje informacje o pluginie
   bxauth:
+    description: Pokazuje informacje o pluginie
   changepass:
+    description: Zmienia haslo
   changepassword:
+    description: Zmienia haslo
   multi:
+    description: Daje mozliwosc graczu tworzyc wiele kont
   multikonta:
+    description: Daje mozliwosc graczu tworzyc wiele kont
