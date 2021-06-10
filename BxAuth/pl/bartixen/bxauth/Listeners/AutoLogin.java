@@ -93,7 +93,7 @@ public class AutoLogin implements Listener {
             if (!(data.getData().getBoolean("useripregister." + ipdospr + ".multikonta"))) {
                 if (adresyipgraczy.size() > plugin.getConfig().getInt("maxIPregister")) {
                     if (!(adresyipgraczy.contains(p.getDisplayName()))) {
-                        p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Wykryto zbyt wiele kont na tym adresie IP.\n§7Twoje konta: " + adresyipgraczy.toString() + "\n\n§8---\n§7Potrzebujesz pomocy: §9dc.xyz.pl\n");
+                        p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Wykryto zbyt wiele kont na tym adresie IP.\n§7Twoje konta: " + adresyipgraczy.toString() + "\n\n");
                         return;
                     }
                 } else {

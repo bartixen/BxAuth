@@ -1,3 +1,4 @@
+#Dozwolone komendy przed zalogowaniem
 allowcommands:
   - login
   - register
@@ -5,25 +6,50 @@ allowcommands:
   - zaloguj
   - zarejestruj
   - premium
+
+#Czy przed logowaniem gracz moze uzywac czatu
 allowChat: false
+
+#Ilosc maksymalnych kont na jednym adresie ip (mozna to ominac przez /multi nick)
 maxIPregister: 1
+
+#Czy ma byc wlaczona opcja antybot
 antybot: true
-minNicknameLength: 3
-maxNicknameLength: 16
+
+#Czy ma byc zapisywana ostatnia lokalizacja gracza
 safelocation: true
+
+#Spaw logowania
 teleportspawn:
+  #Czy ta opcja ma byc wlaczona
   enabled: true
+  #Lokalizacja spawna
   world: world
   x: 0
   y: 100
   z: 0
   pitch: 0
   yaw: 0
+
+#Czas na rejestracje/logowanie (w sekundach)
 timeout: 60
+
+#Dozwolone znaki w nick gracza
 allowedNicknameCharacters: '[a-zA-Z0-9_]*'
+
+#Minimalna dlugosc nicku gracza
+minNicknameLength: 3
+
+#Maksymalna dlugosc nicku gracza
+maxNicknameLength: 16
+
+#Ustawienia hasla dla kont nopremium
 password:
+  #Minimalna dlugosc hasla
   minlength: 5
+  #Maksymalna dlugosc hasla
   maxlenght: 30
+  #Hasla ktore sa zablokowane
   unsafePasswords:
     - '123456'
     - password
@@ -33,10 +59,18 @@ password:
     - '123456789'
     - help
     - premium
+
+#Kod podczas rejestracji ktora zabezpiecza przed bot
 recoveryCode:
+  #Czy ta opcja ma byc wlaczona
   enabled: true
+  #Dlugosc kodu do przepisania
   length: 8
+
+#Sesje ktore loguja automatycznie graczy
 sessions:
+  #Czy ta opcja ma byc wlaczona
   enabled: true
+  #Ile minut ma byc aktyna sesja
   timeout: 25
 

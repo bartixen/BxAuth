@@ -106,7 +106,7 @@ public class Main extends JavaPlugin {
 
             getServer().getPluginManager().registerEvents(new PlayerEvent(this), this);
             getServer().getPluginManager().registerEvents(new AutoLogin(this), this);
-            getServer().getPluginManager().registerEvents(new PremiumMessage(this), this);
+            getServer().getPluginManager().registerEvents(new CheckAccount(this), this);
         }
     }
 }

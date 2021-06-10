@@ -416,7 +416,9 @@ public class PlayerEvent implements Listener {
         Player p = (Player) event.getPlayer();
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
-            event.setCancelled(true);
+            if (data.getData().getString(uuid + ".check_account") != null) {
+                event.setCancelled(true);
+            }
             if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
                 if (antyspam.get(p) > System.currentTimeMillis()) {
                     antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
