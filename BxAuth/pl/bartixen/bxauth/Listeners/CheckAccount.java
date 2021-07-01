@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class CheckAccount implements Listener {
 
@@ -72,6 +73,7 @@ public class CheckAccount implements Listener {
                 data.getData().set(uuid + ".premium", false);
                 data.saveData();
                 p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Ustawiono status konta na §fNOPREMIUM§7.\n");
+                plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie wyrejestrowal sie");
             }
         }
     }

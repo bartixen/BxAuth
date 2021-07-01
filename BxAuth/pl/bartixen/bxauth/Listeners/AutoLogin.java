@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class AutoLogin implements Listener {
 
@@ -142,27 +143,15 @@ public class AutoLogin implements Listener {
                     if (!data.getData().getBoolean(uuid + ".register")) {
                         data.getData().set(uuid + ".register", true);
                         data.getData().set(uuid + ".data_register", format.format(now));
+                        data.getData().set(uuid + ".lastlogin", format.format(now));
                     }
                     try {
                         data.saveData();
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
-                    if (plugin.getConfig().getBoolean("safelocation")) {
-                        double x = data.getData().getDouble(uuid + ".lastlocation.x");
-                        double y = data.getData().getDouble(uuid + ".lastlocation.y");
-                        double z = data.getData().getDouble(uuid + ".lastlocation.z");
-                        float yaw = data.getData().getInt(uuid + ".lastlocation.yaw");
-                        float pitch = data.getData().getInt(uuid + ".lastlocation.pitch");
-                        String world = data.getData().getString(uuid + ".lastlocation.world");
-                        data.getData().set(uuid + ".lastlogin", format.format(now));
-                        try {
-                            data.saveData();
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                        p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-                    }
+                    safelocation(uuid, p);
+                    plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie konto premium");
                     plugin.LoggedIn.put(uuid, true);
                 } else {
                     if (plugin.getConfig().getBoolean("sessions.enabled")) {
@@ -171,34 +160,15 @@ public class AutoLogin implements Listener {
                                 if (AutoLogin.check(p.getName())) {
                                     plugin.LoggedIn.put(uuid, true);
                                     p.sendMessage("§7Zalogowano automatycznie z powodu aktywnej sesji");
-                                    if (plugin.getConfig().getBoolean("safelocation")) {
-                                        double x = data.getData().getDouble(uuid + ".lastlocation.x");
-                                        double y = data.getData().getDouble(uuid + ".lastlocation.y");
-                                        double z = data.getData().getDouble(uuid + ".lastlocation.z");
-                                        float yaw = data.getData().getInt(uuid + ".lastlocation.yaw");
-                                        float pitch = data.getData().getInt(uuid + ".lastlocation.pitch");
-                                        String world = data.getData().getString(uuid + ".lastlocation.world");
-                                        data.getData().set(uuid + ".lastlogin", format.format(now));
-                                        try {
-                                            data.saveData();
-                                        } catch (IOException ioException) {
-                                            ioException.printStackTrace();
-                                        }
-                                        p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-                                    }
+                                    plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie przez aktywna sesje");
+                                    data.getData().set(uuid + ".lastlogin", format.format(now));
+                                    data.saveData();
+                                    safelocation(uuid ,p);
                                 } else {
                                     plugin.LoggedIn.put(uuid, false);
                                     data.getData().set(uuid + ".notifications", true);
                                     data.saveData();
-                                    if (plugin.getConfig().getBoolean("teleportspawn.enabled")) {
-                                        double x = plugin.getConfig().getDouble("teleportspawn.x");
-                                        double y = plugin.getConfig().getDouble("teleportspawn.y");
-                                        double z = plugin.getConfig().getDouble("teleportspawn.z");
-                                        float yaw = plugin.getConfig().getInt("teleportspawn.yaw");
-                                        float pitch = plugin.getConfig().getInt("teleportspawn.pitch");
-                                        String world = plugin.getConfig().getString("teleportspawn.world");
-                                        p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-                                    }
+                                    teleportspawn(p);
                                 }
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
@@ -211,15 +181,7 @@ public class AutoLogin implements Listener {
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
-                            if (plugin.getConfig().getBoolean("teleportspawn.enabled")) {
-                                double x = plugin.getConfig().getDouble("teleportspawn.x");
-                                double y = plugin.getConfig().getDouble("teleportspawn.y");
-                                double z = plugin.getConfig().getDouble("teleportspawn.z");
-                                float yaw = plugin.getConfig().getInt("teleportspawn.yaw");
-                                float pitch = plugin.getConfig().getInt("teleportspawn.pitch");
-                                String world = plugin.getConfig().getString("teleportspawn.world");
-                                p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-                            }
+                            teleportspawn(p);
                         }
                     } else {
                         plugin.LoggedIn.put(uuid, false);
@@ -229,15 +191,7 @@ public class AutoLogin implements Listener {
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
-                        if (plugin.getConfig().getBoolean("teleportspawn.enabled")) {
-                            double x = plugin.getConfig().getDouble("teleportspawn.x");
-                            double y = plugin.getConfig().getDouble("teleportspawn.y");
-                            double z = plugin.getConfig().getDouble("teleportspawn.z");
-                            float yaw = plugin.getConfig().getInt("teleportspawn.yaw");
-                            float pitch = plugin.getConfig().getInt("teleportspawn.pitch");
-                            String world = plugin.getConfig().getString("teleportspawn.world");
-                            p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-                        }
+                        teleportspawn(p);
                     }
                 }
             }
@@ -248,17 +202,10 @@ public class AutoLogin implements Listener {
                 if ((JavaPlugin.getPlugin(FastLoginBukkit.class).getStatus(p.getUniqueId())) == PremiumStatus.PREMIUM) {
                     if (!(plugin.LoggedIn.get(uuid))) {
                         plugin.LoggedIn.put(uuid, true);
+                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie konto premium");
                         data.getData().set(uuid + ".notifications", false);
                         data.getData().set(uuid + ".premium", true);
-                        if (plugin.getConfig().getBoolean("safelocation")) {
-                            double x = data.getData().getDouble(uuid + ".lastlocation.x");
-                            double y = data.getData().getDouble(uuid + ".lastlocation.y");
-                            double z = data.getData().getDouble(uuid + ".lastlocation.z");
-                            float yaw = data.getData().getInt(uuid + ".lastlocation.yaw");
-                            float pitch = data.getData().getInt(uuid + ".lastlocation.pitch");
-                            String world = data.getData().getString(uuid + ".lastlocation.world");
-                            p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-                        }
+                        safelocation(uuid, p);
                         data.getData().set(uuid + ".lastlogin", format.format(now));
                         try {
                             data.saveData();
@@ -269,6 +216,30 @@ public class AutoLogin implements Listener {
                 }
             }
         }, 25);
+    }
+
+    public void safelocation(UUID uuid, Player p) {
+        if (plugin.getConfig().getBoolean("safelocation")) {
+            double x = data.getData().getDouble(uuid + ".lastlocation.x");
+            double y = data.getData().getDouble(uuid + ".lastlocation.y");
+            double z = data.getData().getDouble(uuid + ".lastlocation.z");
+            float yaw = data.getData().getInt(uuid + ".lastlocation.yaw");
+            float pitch = data.getData().getInt(uuid + ".lastlocation.pitch");
+            String world = data.getData().getString(uuid + ".lastlocation.world");
+            p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
+        }
+    }
+
+    public void teleportspawn(Player p) {
+        if (plugin.getConfig().getBoolean("teleportspawn.enabled")) {
+            double x = plugin.getConfig().getDouble("teleportspawn.x");
+            double y = plugin.getConfig().getDouble("teleportspawn.y");
+            double z = plugin.getConfig().getDouble("teleportspawn.z");
+            float yaw = plugin.getConfig().getInt("teleportspawn.yaw");
+            float pitch = plugin.getConfig().getInt("teleportspawn.pitch");
+            String world = plugin.getConfig().getString("teleportspawn.world");
+            p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
+        }
     }
 
     @EventHandler

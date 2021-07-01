@@ -11,6 +11,7 @@ import pl.bartixen.bxauth.Data.DataManager;
 import pl.bartixen.bxauth.Main;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class LogutCommand implements CommandExecutor {
 
@@ -37,14 +38,15 @@ public class LogutCommand implements CommandExecutor {
 
         if (plugin.LoggedIn.get(uuid)) {
             if ((JavaPlugin.getPlugin(FastLoginBukkit.class).getStatus(p.getUniqueId())) != PremiumStatus.PREMIUM) {
-                p.sendMessage("§7Zostaleś wylogowany");
+                p.sendMessage("§7Zostales wylogowany");
                 data.getData().set(uuid + ".notifications", true);
                 plugin.LoggedIn.put(uuid, false);
+                plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie sie wylogowal");
             } else {
-                p.sendMessage("§7Gracz premium nie może się wylogować");
+                p.sendMessage("§7Gracz premium nie moze się wylogowac");
             }
         } else {
-            p.sendMessage("§7Nie jesteś zalogowany");
+            p.sendMessage("§7Nie jestes zalogowany");
         }
 
         return false;

@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class RegisterCommand implements CommandExecutor {
 
@@ -58,7 +59,7 @@ public class RegisterCommand implements CommandExecutor {
                                     List<String> wiadomosci = plugin.getConfig().getStringList("password.unsafePasswords");
                                     for (String blacklist : wiadomosci) {
                                         if (haslo1.equals(blacklist.toLowerCase())) {
-                                            p.sendMessage("§7Twoje haslo jest zbyt proste lub znajduje się na liście niedozwolonych haseł");
+                                            p.sendMessage("§7Twoje haslo jest zbyt proste lub znajduje się na liscie niedozwolonych hasel");
                                             break;
                                         }
                                     }
@@ -68,51 +69,50 @@ public class RegisterCommand implements CommandExecutor {
                                     String ipgracza = ip.substring(0, entityTypeLenght);
                                     if (plugin.getConfig().getBoolean("recoveryCode.enabled")) {
                                         if ((captcha1.toLowerCase(Locale.ROOT).equals(captcha2.toLowerCase(Locale.ROOT)))) {
-                                            data.getData().set(uuid + ".data_register", format.format(now));
-                                            data.getData().set(uuid + ".register", true);
-                                            data.getData().set(uuid + ".password", HashPassword.tohash(haslo1));
-                                            data.getData().set("sessions." + p.getName() + ".date", format.format(now));
-                                            data.getData().set("sessions." + p.getName() + ".ip", ipgracza);
-                                            data.getData().set(uuid + ".notifications", false);
-                                            data.getData();
-                                            p.sendMessage("§7Zostaleś zarejestrowany pomyślnie");
-                                            plugin.LoggedIn.put(uuid, true);
+                                            register(uuid, now, format, p, haslo1, ipgracza);
                                         } else {
                                             p.sendMessage("§7Podany kod captcha jest niepoprawny");
                                         }
                                     } else {
-                                        data.getData().set(uuid + ".data_register", format.format(now));
-                                        data.getData().set(uuid + ".register", true);
-                                        data.getData().set(uuid + ".password", HashPassword.tohash(haslo1));
-                                        data.getData().set("sessions." + p.getName() + ".date", format.format(now));
-                                        data.getData().set("sessions." + p.getName() + ".ip", ipgracza);
-                                        data.getData();
-                                        p.sendMessage("§7Zostaleś zarejestrowany pomyślnie");
-                                        plugin.LoggedIn.put(uuid, true);
+                                        register(uuid, now, format, p, haslo1, ipgracza);
                                     }
                                 } else {
-                                    p.sendMessage("§7Twoje haslo może mieć maksymalnie §9" + plugin.getConfig().getInt("password.maxlenght") + " §7znaków");
+                                    p.sendMessage("§7Twoje haslo moze miec maksymalnie §9" + plugin.getConfig().getInt("password.maxlenght") + " §7znakow");
                                 }
                             } else {
-                                p.sendMessage("§7Twoje haslo musi mieć minimum §9" + plugin.getConfig().getInt("password.minlength") + " §7znaków");
+                                p.sendMessage("§7Twoje haslo musi miec minimum §9" + plugin.getConfig().getInt("password.minlength") + " §7znakow");
                             }
                         } else {
-                            p.sendMessage("§7Podane hasla nie zgadzają się");
+                            p.sendMessage("§7Podane hasla nie zgadzaja sie");
                         }
                     } else {
                         String captcha = data.getData().getString(uuid + ".captcha");
-                        p.sendMessage("§7Poprawne użycie: §9/register [haslo] [haslo] " + captcha);
+                        p.sendMessage("§7Poprawne uzycie: §9/register [haslo] [haslo] " + captcha);
                     }
                 } else {
-                    p.sendMessage("§7Jesteś już zarejestrowany");
+                    p.sendMessage("§7Jestes juz zarejestrowany");
                 }
             } else {
-                p.sendMessage("§7Gracz premium nie może się sam zarejestrować");
+                p.sendMessage("§7Gracz premium nie moze sie sam zarejestrowac");
             }
         } else {
-            p.sendMessage("§7Jesteś już zalogowany");
+            p.sendMessage("§7Jestes juz zalogowany");
         }
 
         return false;
     }
+
+    public void register(UUID uuid, Date now, SimpleDateFormat format, Player p, String haslo1, String ipgracza) {
+        data.getData().set(uuid + ".data_register", format.format(now));
+        data.getData().set(uuid + ".register", true);
+        data.getData().set(uuid + ".password", HashPassword.tohash(haslo1));
+        data.getData().set("sessions." + p.getName() + ".date", format.format(now));
+        data.getData().set("sessions." + p.getName() + ".ip", ipgracza);
+        data.getData().set(uuid + ".notifications", false);
+        data.getData();
+        p.sendMessage("§7Zostales zarejestrowany pomyslnie");
+        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie zarejestrowal sie");
+        plugin.LoggedIn.put(uuid, true);
+    }
+
 }

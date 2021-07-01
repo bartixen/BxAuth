@@ -40,24 +40,24 @@ public class PlayerEvent implements Listener {
         int min = plugin.getConfig().getInt("minNicknameLength");
         int max = plugin.getConfig().getInt("maxNicknameLength");
         if (e.getName().length() > max) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twój nick może mieć maksymalnie §9" + max + " znaków\n\n§8---\n§7Potrzebujesz pomocy: §9dc.xyz.pl\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twoj nick moze miec maksymalnie §9" + max + " znakow\n");
         }
         if (e.getName().length() < min) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twój nick musi mieć minimum §9" + min + " znaki\n\n§8---\n§7Potrzebujesz pomocy: §9dc.xyz.pl\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twoj nick musi miec minimum §9" + min + " znaki\n");
         }
         String characters = plugin.getConfig().getString("allowedNicknameCharacters");
         if (!(e.getName().matches(characters))) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twój nick posiada niedozwolone znaki.\n\n§8---\n§7Potrzebujesz pomocy: §9dc.xyz.pl\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twoj nick posiada niedozwolone znaki.\n");
         }
         Player p = Bukkit.getServer().getPlayerExact(e.getName().toLowerCase());
         if (p != null) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Gracz §9" + p.getDisplayName() + " §7jest juz §aonline §7na serwerze\n\n§8---\n§7Potrzebujesz pomocy: §9dc.xyz.pl\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Gracz §9" + p.getDisplayName() + " §7jest juz §aonline §7na serwerze\n");
         }
         if ((data.getData().getString(e.getName())) == null) {
             if (plugin.getConfig().getBoolean("antybot")) {
                 data.getData().set(e.getName(), true);
                 data.saveData();
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Zweryfikowano konto pomyślnie, dołącz ponownie na serwer w celu rejestracji konta.\n");
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Zweryfikowano konto pomyslnie, dolacz ponownie na serwer w celu rejestracji konta.\n");
             }
         }
     }
@@ -91,6 +91,21 @@ public class PlayerEvent implements Listener {
         }
     }
 
+    public void antyspamcheck(Player p) {
+        UUID uuid = p.getUniqueId();
+        if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
+            if (antyspam.get(p) > System.currentTimeMillis()) {
+                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
+            } else {
+                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
+                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
+            }
+        } else {
+            p.sendMessage("§7Musisz się najpierw uwierzytelnić");
+            antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
@@ -102,17 +117,7 @@ public class PlayerEvent implements Listener {
         if (!(plugin.LoggedIn.get(uuid))) {
             if (!(x1 == x2 && z1 == z2)) {
                 e.setCancelled(true);
-                if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                    if (antyspam.get(p) > System.currentTimeMillis()) {
-                        antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                    } else {
-                        p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                        antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                    }
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
+                antyspamcheck(p);
             }
         }
     }
@@ -124,17 +129,7 @@ public class PlayerEvent implements Listener {
 
         if (!(plugin.LoggedIn.get(uuid))) {
             e.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -145,17 +140,7 @@ public class PlayerEvent implements Listener {
 
         if (!(plugin.LoggedIn.get(uuid))) {
             e.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -166,17 +151,7 @@ public class PlayerEvent implements Listener {
 
         if (!(plugin.LoggedIn.get(uuid))) {
             e.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -195,17 +170,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -215,17 +180,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -235,17 +190,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -255,17 +200,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -275,17 +210,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -295,17 +220,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -316,17 +231,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = player.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -336,17 +241,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -356,17 +251,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -376,17 +261,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -396,17 +271,7 @@ public class PlayerEvent implements Listener {
         UUID uuid = p.getUniqueId();
         if (!(plugin.LoggedIn.get(uuid))) {
             event.setCancelled(true);
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
+            antyspamcheck(p);
         }
     }
 
@@ -419,18 +284,7 @@ public class PlayerEvent implements Listener {
             if (data.getData().getString(uuid + ".check_account") != null) {
                 event.setCancelled(true);
             }
-            if ((antyspam.containsKey(p)) && data.getData().getBoolean(uuid + ".notifications")) {
-                if (antyspam.get(p) > System.currentTimeMillis()) {
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                } else {
-                    p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                    antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-                }
-            } else {
-                p.sendMessage("§7Musisz się najpierw uwierzytelnić");
-                antyspam.put(p, System.currentTimeMillis() + 6 * 1000);
-            }
-
+            antyspamcheck(p);
         }
     }
 }

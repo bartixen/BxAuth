@@ -12,6 +12,7 @@ import pl.bartixen.bxauth.Main;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class UnRegisterCommand implements CommandExecutor {
 
@@ -48,15 +49,16 @@ public class UnRegisterCommand implements CommandExecutor {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Zostaleś pomyślnie wyrejestrowany\n");
+                        p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Zostales pomyslnie wyrejestrowany\n");
+                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie wyrejestrowal sie");
                     } else {
-                        p.sendMessage("§7Najpierw użyj: §9/register");
+                        p.sendMessage("§7Najpierw uzyj: §9/register");
                     }
                 } else {
-                    p.sendMessage("§7Gracz premium nie może się wyrejestrować");
+                    p.sendMessage("§7Gracz premium nie moze sie wyrejestrowac");
                 }
             } else {
-                p.sendMessage("§7Najpierw użyj: §9/login");
+                p.sendMessage("§7Najpierw uzyj: §9/login");
             }
         } else {
             if (args.length == 1) {
@@ -67,12 +69,15 @@ public class UnRegisterCommand implements CommandExecutor {
                         data.getData().set("sessions." + args[0], null);
                         data.getData().set(uuid + ".password", null);
                         data.getData().set(uuid + ".lastlocation", null);
+                        data.getData().set(uuid + ".premium", null);
+                        data.getData().set(uuid + ".check_account", null);
                         try {
                             data.saveData();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        sender.sendMessage("§7Gracz §9" + args[0] + " §7zostal pomyślnie wyrejestrowany");
+                        sender.sendMessage("§7Gracz §9" + args[0] + " §7zostal pomyslnie wyrejestrowany");
+                        plugin.getLogger().log(Level.INFO, "Gracz " + args[0] + " pomyslnie zostal wyrejestrowany przez " + sender.getName());
                     } else {
                         sender.sendMessage("§7Gracz §9" + args[0] + " §7nie jest zarejestrowany");
                     }
@@ -81,7 +86,6 @@ public class UnRegisterCommand implements CommandExecutor {
                 }
             }
         }
-
         return false;
     }
 }

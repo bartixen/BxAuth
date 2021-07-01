@@ -28,35 +28,29 @@ public class AuthCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("reload")) {
                     sender.sendMessage("§8 • — • — • — • ");
                     plugin.reloadConfig();
-                    sender.sendMessage("§7Pomyślnie przeladowano §9CONFIG");
+                    sender.sendMessage("§7Pomyslnie przeladowano §9CONFIG");
                     data.reloadData();
-                    sender.sendMessage("§7Pomyślnie przeladowano §9DATAMENAGER");
+                    sender.sendMessage("§7Pomyslnie przeladowano §9DATAMENAGER");
                     sender.sendMessage("§8 • — • — • — • ");
                 } else {
-                    sender.sendMessage("§7");
-                    sender.sendMessage("§7Plugin §eBxAuth");
-                    sender.sendMessage("§7Version: §e" + version);
-                    sender.sendMessage("§7Author: §eBartixen");
-                    sender.sendMessage("§7Website: §ehttps://bartixen.pl");
-                    sender.sendMessage("§7");
+                    sendmsgpl(sender, version);
                 }
             } else {
-                sender.sendMessage("§7");
-                sender.sendMessage("§7Plugin §eBxAuth");
-                sender.sendMessage("§7Version: §e" + version);
-                sender.sendMessage("§7Author: §eBartixen");
-                sender.sendMessage("§7Website: §ehttps://bartixen.pl");
-                sender.sendMessage("§7");
+                sendmsgpl(sender, version);
             }
         } else {
-            sender.sendMessage("§7");
-            sender.sendMessage("§7Plugin §eBxAuth");
-            sender.sendMessage("§7Version: §e" + version);
-            sender.sendMessage("§7Author: §eBartixen");
-            sender.sendMessage("§7Website: §ehttps://bartixen.pl");
-            sender.sendMessage("§7");
+            sendmsgpl(sender, version);
         }
         return false;
+    }
+
+    public void sendmsgpl(CommandSender sender, String version) {
+        sender.sendMessage("§7");
+        sender.sendMessage("§7Plugin §eBxAuth");
+        sender.sendMessage("§7Version: §e" + version);
+        sender.sendMessage("§7Author: §eBartixen");
+        sender.sendMessage("§7Website: §ehttps://bartixen.pl");
+        sender.sendMessage("§7");
     }
 
 }
