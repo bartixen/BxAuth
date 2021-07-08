@@ -40,24 +40,24 @@ public class PlayerEvent implements Listener {
         int min = plugin.getConfig().getInt("minNicknameLength");
         int max = plugin.getConfig().getInt("maxNicknameLength");
         if (e.getName().length() > max) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twoj nick moze miec maksymalnie §9" + max + " znakow\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twój nick może mieć maksymalnie §9" + max + " znakow\n");
         }
         if (e.getName().length() < min) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twoj nick musi miec minimum §9" + min + " znaki\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twój nick musi mieć minimum §9" + min + " znaki\n");
         }
         String characters = plugin.getConfig().getString("allowedNicknameCharacters");
         if (!(e.getName().matches(characters))) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twoj nick posiada niedozwolone znaki.\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Twój nick posiada niedozwolone znaki.\n");
         }
         Player p = Bukkit.getServer().getPlayerExact(e.getName().toLowerCase());
         if (p != null) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Gracz §9" + p.getDisplayName() + " §7jest juz §aonline §7na serwerze\n");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Gracz §9" + p.getDisplayName() + " §7jest już §aonline §7na serwerze\n");
         }
         if ((data.getData().getString(e.getName())) == null) {
             if (plugin.getConfig().getBoolean("antybot")) {
                 data.getData().set(e.getName(), true);
                 data.saveData();
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Zweryfikowano konto pomyslnie, dolacz ponownie na serwer w celu rejestracji konta.\n");
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n§8§l[§9§lBxAuth§8§l]\n\n§7Zweryfikowano konto pomyślnie, dołącz ponownie na serwer w celu rejestracji konta.\n");
             }
         }
     }

@@ -16,7 +16,7 @@ public class LogFilter implements Filter {
     }
 
     private Result filter(String message) {
-        if ((message.matches("(.+) issued server command: /(?i)(login|zaloguj|register|reg|zarejestruj|changepass|changepassword)(.*)")) || (message.matches("(.+) has a verified premium account: (.*)")) || (message.matches("(.+) Twoj nick moze miec maksymalnie (.*)")) || (message.matches("(.+) Twoj nick musi miec minimum (.*)")) || (message.matches("(.+) Twoj nick posiada niedozwolone znaki (.*)")) || (message.matches("(.+) jest juz online na serwerze (.*)")) || (message.matches("(.+) Zweryfikowano konto pomyslnie, dolacz ponownie na serwer w celu rejestracji konta. (.*)")) || (message.matches("(.+) Wykryto zbyt wiele kont na tym adresie IP. (.*)"))) {
+        if ((message.matches("(.+) issued server command: /(?i)(login|zaloguj|register|reg|zarejestruj|changepass|changepassword)(.*)")) || (message.matches("(.+) has a verified premium account: (.*)")) || (message.matches("(.+) Twój nick moźe mieć maksymalnie (.*)")) || (message.matches("(.+) Twój nick musi mieć minimum (.*)")) || (message.matches("(.+) Twój nick posiada niedozwolone znaki (.*)")) || (message.matches("(.+) jest już online na serwerze (.*)")) || (message.matches("(.+) Zweryfikowano konto pomyślnie, dołącz ponownie na serwer w celu rejestracji konta. (.*)")) || (message.matches("(.+) Wykryto zbyt wiele kont na tym adresie IP. (.*)"))) {
             return Result.DENY;
         } else {
             return Result.NEUTRAL;

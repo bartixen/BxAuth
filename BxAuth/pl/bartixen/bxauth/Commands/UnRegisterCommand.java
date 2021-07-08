@@ -49,16 +49,16 @@ public class UnRegisterCommand implements CommandExecutor {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Zostales pomyslnie wyrejestrowany\n");
-                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie wyrejestrowal sie");
+                        p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Zostaleś pomyślnie wyrejestrowany\n");
+                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyślnie wyrejestrował się");
                     } else {
-                        p.sendMessage("§7Najpierw uzyj: §9/register");
+                        p.sendMessage("§7Najpierw uźyj: §9/register");
                     }
                 } else {
-                    p.sendMessage("§7Gracz premium nie moze sie wyrejestrowac");
+                    p.sendMessage("§7Gracz premium nie moźe się wyrejestrować");
                 }
             } else {
-                p.sendMessage("§7Najpierw uzyj: §9/login");
+                p.sendMessage("§7Najpierw uźyj: §9/login");
             }
         } else {
             if (args.length == 1) {
@@ -76,8 +76,8 @@ public class UnRegisterCommand implements CommandExecutor {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        sender.sendMessage("§7Gracz §9" + args[0] + " §7zostal pomyslnie wyrejestrowany");
-                        plugin.getLogger().log(Level.INFO, "Gracz " + args[0] + " pomyslnie zostal wyrejestrowany przez " + sender.getName());
+                        sender.sendMessage("§7Gracz §9" + args[0] + " §7został pomyślnie wyrejestrowany");
+                        plugin.getLogger().log(Level.INFO, "Gracz " + args[0] + " pomyślnie został wyrejestrowany przez " + sender.getName());
                     } else {
                         sender.sendMessage("§7Gracz §9" + args[0] + " §7nie jest zarejestrowany");
                     }

@@ -1,8 +1,8 @@
 main: pl.bartixen.bxauth.Main
-version: 3.2.3
+version: 3.2.4
 author: Bartixen
 name: BxAuth
-api-version: 1.17
+api-version: 1.17.1
 website: https://bartixen.pl
 description: Plugin na uwierzytelnianie graczy (AutoLogin Premium)
 depend: [UserLogin, FastLogin]

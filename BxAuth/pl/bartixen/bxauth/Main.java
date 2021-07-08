@@ -33,7 +33,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         if ((!getDescription().getName().contains("BxAuth")) || (!getDescription().getAuthors().contains("Bartixen"))) {
             getLogger().log(Level.WARNING, "§8[========== §9BxAuth §8==========]");
-            getLogger().log(Level.WARNING, "§cPlugin zostal wylaczony z powodu edytowania pliku §eplugin.yml");
+            getLogger().log(Level.WARNING, "§cPlugin został wyłączony z powodu edytowania pliku §eplugin.yml");
             getLogger().log(Level.WARNING, "§8[========== §9BxAuth §8==========]");
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         } else {

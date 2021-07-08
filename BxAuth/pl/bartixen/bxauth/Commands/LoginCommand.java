@@ -71,18 +71,18 @@ public class LoginCommand implements CommandExecutor {
                             String world = data.getData().getString(uuid + ".lastlocation.world");
                             p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
                         }
-                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie przez haslo");
+                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie zalogował sie przez hasło");
                     } else {
-                        p.sendMessage("§7Podane haslo jest niepoprawne");
+                        p.sendMessage("§7Podane hasło jest niepoprawne");
                     }
                 } else {
-                    p.sendMessage("§7Poprawne uzycie: §9/login [haslo]");
+                    p.sendMessage("§7Poprawne użycie: §9/login [hasło]");
                 }
             } else {
-                p.sendMessage("§7Najpierw uzyj: §9/register");
+                p.sendMessage("§7Najpierw użyj: §9/register");
             }
         } else {
-            p.sendMessage("§7Jestes już zalogowany");
+            p.sendMessage("§7Jesteś już zalogowany");
         }
 
         return false;

@@ -49,7 +49,7 @@ public class ChangepasswordCommand implements CommandExecutor {
                         if (haslo1.equals(ghaslo)) {
                             Date now = new Date();
                             SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss ss:mm:HH dd-MM-yyyy");
-                            p.sendMessage("§7Pomyslnie zmieniono haslo");
+                            p.sendMessage("§7Pomyślnie zmieniono hasło");
                             data.getData().set(uuid + ".password", haslo2);
                             data.getData().set(uuid + ".changepassword.data", format.format(now));
                             try {
@@ -57,21 +57,21 @@ public class ChangepasswordCommand implements CommandExecutor {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zmienil haslo");
+                            plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie zmienił hasło");
                         } else {
-                            p.sendMessage("§7Podane haslo jest niepoprawne");
+                            p.sendMessage("§7Podane hasło jest niepoprawne");
                         }
                     } else {
-                        p.sendMessage("§7Poprawne uzycie: §9/changepassword [stare_haslo] [nowe_haslo]");
+                        p.sendMessage("§7Poprawne użycie: §9/changepassword [stare_hasło] [nowe_hasło]");
                     }
                 } else {
-                    p.sendMessage("§7Najpierw uzyj: §9/register");
+                    p.sendMessage("§7Najpierw użyj: §9/register");
                 }
             } else {
-                p.sendMessage("§7Gracz premium nie moze zmienic hasla");
+                p.sendMessage("§7Gracz premium nie może zmienić hasła");
             }
         } else {
-            p.sendMessage("§7Najpierw uzyj: §9/login");
+            p.sendMessage("§7Najpierw użyj: §9/login");
         }
 
         return false;

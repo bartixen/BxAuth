@@ -59,7 +59,7 @@ public class RegisterCommand implements CommandExecutor {
                                     List<String> wiadomosci = plugin.getConfig().getStringList("password.unsafePasswords");
                                     for (String blacklist : wiadomosci) {
                                         if (haslo1.equals(blacklist.toLowerCase())) {
-                                            p.sendMessage("§7Twoje haslo jest zbyt proste lub znajduje się na liscie niedozwolonych hasel");
+                                            p.sendMessage("§7Twoje hasło jest zbyt proste lub znajduje się na liście niedozwolonych haseł");
                                             break;
                                         }
                                     }
@@ -77,26 +77,26 @@ public class RegisterCommand implements CommandExecutor {
                                         register(uuid, now, format, p, haslo1, ipgracza);
                                     }
                                 } else {
-                                    p.sendMessage("§7Twoje haslo moze miec maksymalnie §9" + plugin.getConfig().getInt("password.maxlenght") + " §7znakow");
+                                    p.sendMessage("§7Twoje hasło może mieć maksymalnie §9" + plugin.getConfig().getInt("password.maxlenght") + " §7znaków");
                                 }
                             } else {
-                                p.sendMessage("§7Twoje haslo musi miec minimum §9" + plugin.getConfig().getInt("password.minlength") + " §7znakow");
+                                p.sendMessage("§7Twoje hasło musi mieć minimum §9" + plugin.getConfig().getInt("password.minlength") + " §7znaków");
                             }
                         } else {
-                            p.sendMessage("§7Podane hasla nie zgadzaja sie");
+                            p.sendMessage("§7Podane hasła nie zgadzaja się");
                         }
                     } else {
                         String captcha = data.getData().getString(uuid + ".captcha");
-                        p.sendMessage("§7Poprawne uzycie: §9/register [haslo] [haslo] " + captcha);
+                        p.sendMessage("§7Poprawne uźycie: §9/register [haslo] [haslo] " + captcha);
                     }
                 } else {
-                    p.sendMessage("§7Jestes juz zarejestrowany");
+                    p.sendMessage("§7Jesteś już zarejestrowany");
                 }
             } else {
-                p.sendMessage("§7Gracz premium nie moze sie sam zarejestrowac");
+                p.sendMessage("§7Gracz premium nie może się sam zarejestrować");
             }
         } else {
-            p.sendMessage("§7Jestes juz zalogowany");
+            p.sendMessage("§7Jesteś juz zalogowany");
         }
 
         return false;
@@ -110,8 +110,8 @@ public class RegisterCommand implements CommandExecutor {
         data.getData().set("sessions." + p.getName() + ".ip", ipgracza);
         data.getData().set(uuid + ".notifications", false);
         data.getData();
-        p.sendMessage("§7Zostales zarejestrowany pomyslnie");
-        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie zarejestrowal sie");
+        p.sendMessage("§7Zostaleś zarejestrowany pomyślnie");
+        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyślnie zarejestrowal się");
         plugin.LoggedIn.put(uuid, true);
     }
 

@@ -26,7 +26,7 @@ public class LoginTime extends BukkitRunnable {
             UUID uuid = p.getUniqueId();
             if (!plugin.LoggedIn.get(uuid)) {
                 if ((data.getData().getInt(uuid + ".logintime")) > plugin.getConfig().getInt("timeout")) {
-                    p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Twoj czas na uwierzytelnienie mina.\n");
+                    p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Twój czas na uwierzytelnienie miną.\n");
                 } else {
                     data.getData().set(uuid + ".logintime", data.getData().getInt(uuid + ".logintime") + 1);
                     try {
