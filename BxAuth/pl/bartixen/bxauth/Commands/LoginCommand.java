@@ -71,7 +71,9 @@ public class LoginCommand implements CommandExecutor {
                             String world = data.getData().getString(uuid + ".lastlocation.world");
                             p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
                         }
-                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie zalogował sie przez hasło");
+                        if (plugin.getConfig().getBoolean("logs")) {
+                            plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie przez haslo");
+                        }
                     } else {
                         p.sendMessage("§7Podane hasło jest niepoprawne");
                     }

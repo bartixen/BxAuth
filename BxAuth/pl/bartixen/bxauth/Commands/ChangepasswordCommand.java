@@ -57,7 +57,9 @@ public class ChangepasswordCommand implements CommandExecutor {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie zmienił hasło");
+                            if (plugin.getConfig().getBoolean("logs")) {
+                                plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zmienil haslo");
+                            }
                         } else {
                             p.sendMessage("§7Podane hasło jest niepoprawne");
                         }

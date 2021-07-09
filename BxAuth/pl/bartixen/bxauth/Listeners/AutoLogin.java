@@ -149,7 +149,9 @@ public class AutoLogin implements Listener {
                         ioException.printStackTrace();
                     }
                     safelocation(uuid, p);
-                    plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie zalogował się kontem premium");
+                    if (plugin.getConfig().getBoolean("logs")) {
+                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie kontem premium");
+                    }
                     plugin.LoggedIn.put(uuid, true);
                 } else {
                     if (plugin.getConfig().getBoolean("sessions.enabled")) {
@@ -158,7 +160,9 @@ public class AutoLogin implements Listener {
                                 if (AutoLogin.check(p.getName())) {
                                     plugin.LoggedIn.put(uuid, true);
                                     p.sendMessage("§7Zalogowano automatycznie z powodu aktywnej sesji");
-                                    plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie zalogował się przez aktywna sesje");
+                                    if (plugin.getConfig().getBoolean("logs")) {
+                                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie przez aktywna sesje");
+                                    }
                                     data.getData().set(uuid + ".lastlogin", format.format(now));
                                     data.saveData();
                                     safelocation(uuid ,p);
@@ -200,7 +204,9 @@ public class AutoLogin implements Listener {
                 if ((JavaPlugin.getPlugin(FastLoginBukkit.class).getStatus(p.getUniqueId())) == PremiumStatus.PREMIUM) {
                     if (!(plugin.LoggedIn.get(uuid))) {
                         plugin.LoggedIn.put(uuid, true);
-                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie zalogował się kontem premium");
+                        if (plugin.getConfig().getBoolean("logs")) {
+                            plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie zalogowal sie kontem premium");
+                        }
                         data.getData().set(uuid + ".notifications", false);
                         data.getData().set(uuid + ".premium", true);
                         safelocation(uuid, p);

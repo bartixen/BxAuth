@@ -41,7 +41,9 @@ public class LogutCommand implements CommandExecutor {
                 p.sendMessage("§7Zostales wylogowany");
                 data.getData().set(uuid + ".notifications", true);
                 plugin.LoggedIn.put(uuid, false);
-                plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyślnie się wylogował");
+                if (plugin.getConfig().getBoolean("logs")) {
+                    plugin.getLogger().log(Level.INFO, "Gracz " + p.getDisplayName() + " pomyslnie sie wylogowal");
+                }
             } else {
                 p.sendMessage("§7Gracz premium nie może się wylogować");
             }

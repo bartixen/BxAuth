@@ -38,7 +38,9 @@ public class MultiCommand implements CommandExecutor {
                                 e.printStackTrace();
                             }
                             sender.sendMessage("§7Od teraz gracz §9" + args[0] + " §7nie moze tworzyć multikont");
-                            plugin.getLogger().log(Level.INFO, "Gracz " + sender.getName() + " pomyślnie zabrał moźliwość tworzenia kont dla " + args[0]);
+                            if (plugin.getConfig().getBoolean("logs")) {
+                                plugin.getLogger().log(Level.INFO, "Gracz " + sender.getName() + " pomyslnie zabral mozliwosc tworzenia kont dla " + args[0]);
+                            }
                         } else {
                             data.getData().set("useripregister." + ip + ".multikonta", true);
                             try {
@@ -47,7 +49,9 @@ public class MultiCommand implements CommandExecutor {
                                 e.printStackTrace();
                             }
                             sender.sendMessage("§7Od teraz gracz §9" + args[0] + " §7może tworzyć multikonta");
-                            plugin.getLogger().log(Level.INFO, "Gracz " + sender.getName() + " pomyślnie nadał moźliwość tworzenia kont dla " + args[0]);
+                            if (plugin.getConfig().getBoolean("logs")) {
+                                plugin.getLogger().log(Level.INFO, "Gracz " + sender.getName() + " pomyslnie nadal mozliwosc tworzenia kont dla " + args[0]);
+                            }
                         }
                     } else {
                         sender.sendMessage("§7Gracz §9" + args[0] + " §7ma zmienne IP");

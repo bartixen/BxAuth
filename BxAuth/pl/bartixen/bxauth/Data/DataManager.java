@@ -36,7 +36,7 @@ public class DataManager {
                 path.mkdirs();
                 file.createNewFile();
             } catch (IOException e) {
-                Bukkit.getServer().getLogger().log(Level.WARNING, "§cNie udało się utworzyć pliku §edata.yml");
+                Bukkit.getServer().getLogger().log(Level.WARNING, "Nie udalo sie utworzyc pliku §edata.yml");
             }
         }
         data = YamlConfiguration.loadConfiguration(file);
@@ -50,7 +50,7 @@ public class DataManager {
         try {
             data.save(file);
         } catch (IIOException e) {
-            Bukkit.getServer().getLogger().log(Level.WARNING, "§cNie udało się zapisać pliku §edata.yml");
+            Bukkit.getServer().getLogger().log(Level.WARNING, "§cNie udalo sie zapisac pliku §edata.yml");
         }
     }
 

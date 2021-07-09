@@ -66,7 +66,9 @@ public class CheckAccount implements Listener {
                 data.getData().set(uuid + ".data_register", format.format(now));
                 data.saveData();
                 p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Ustawiono status konta na §fPREMIUM§7.\n");
-                plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyślnie ustawił status konta na PREMIUM");
+                if (plugin.getConfig().getBoolean("logs")) {
+                    plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie ustawil status konta na PREMIUM");
+                }
             }
             if (e.getRawSlot() == 15) {
                 p.closeInventory();
@@ -74,7 +76,9 @@ public class CheckAccount implements Listener {
                 data.getData().set(uuid + ".premium", false);
                 data.saveData();
                 p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Ustawiono status konta na §fNOPREMIUM§7.\n");
-                plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyślnie ustawił status konta na NOPREMIUM");
+                if (plugin.getConfig().getBoolean("logs")) {
+                    plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie ustawil status konta na NOPREMIUM");
+                }
             }
         }
     }

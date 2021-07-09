@@ -50,7 +50,9 @@ public class UnRegisterCommand implements CommandExecutor {
                             e.printStackTrace();
                         }
                         p.kickPlayer("\n§8§l[§9§lBxAuth§8§l]\n\n§7Zostaleś pomyślnie wyrejestrowany\n");
-                        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyślnie wyrejestrował się");
+                        if (plugin.getConfig().getBoolean("logs")) {
+                            plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie wyrejestrowal sie");
+                        }
                     } else {
                         p.sendMessage("§7Najpierw uźyj: §9/register");
                     }
@@ -77,7 +79,9 @@ public class UnRegisterCommand implements CommandExecutor {
                             e.printStackTrace();
                         }
                         sender.sendMessage("§7Gracz §9" + args[0] + " §7został pomyślnie wyrejestrowany");
-                        plugin.getLogger().log(Level.INFO, "Gracz " + args[0] + " pomyślnie został wyrejestrowany przez " + sender.getName());
+                        if (plugin.getConfig().getBoolean("logs")) {
+                            plugin.getLogger().log(Level.INFO, "Gracz " + args[0] + " pomyslnie zostal wyrejestrowany przez " + sender.getName());
+                        }
                     } else {
                         sender.sendMessage("§7Gracz §9" + args[0] + " §7nie jest zarejestrowany");
                     }

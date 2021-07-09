@@ -10,6 +10,9 @@ allowcommands:
 #Czy przed logowaniem gracz moze uzywac czatu
 allowChat: false
 
+#Wysyla do konsoli wszystkie logi z komend/eventow
+logs: true
+
 #Ilosc maksymalnych kont na jednym adresie ip (mozna to ominac przez /multi nick)
 maxIPregister: 1
 

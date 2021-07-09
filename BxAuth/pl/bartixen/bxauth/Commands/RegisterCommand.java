@@ -111,7 +111,9 @@ public class RegisterCommand implements CommandExecutor {
         data.getData().set(uuid + ".notifications", false);
         data.getData();
         p.sendMessage("§7Zostaleś zarejestrowany pomyślnie");
-        plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyślnie zarejestrowal się");
+        if (plugin.getConfig().getBoolean("logs")) {
+            plugin.getLogger().log(Level.INFO, "Gracz " + p.getName() + " pomyslnie zarejestrowal sie");
+        }
         plugin.LoggedIn.put(uuid, true);
     }
 
