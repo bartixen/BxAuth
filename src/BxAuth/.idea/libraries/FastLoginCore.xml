@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="FastLoginCore">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../FastLoginCore.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

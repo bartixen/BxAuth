@@ -1,5 +1,0 @@
-name: 'UserLogin'
-version: '2.10.2'
-main: 'com.elchologamer.userlogin.UserLogin'
-api-version: 1.16
-softdepend: [ 'FastLogin' ]
