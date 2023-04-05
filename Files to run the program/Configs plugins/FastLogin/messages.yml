@@ -24,7 +24,6 @@
 # Switch mode is activated and a new (non-whitelist) cracked player tries to join
 switch-kick-message: '
 &8&l[&9&lBxAuth&8&l]
-
 &7Obecnie na serwer mogą wejść tylko gracze premium.
 '
 
@@ -78,7 +77,6 @@ wait-on-proxy: '&7Prosze czekać...'
 # the player will be just authenticated as cracked
 error-kick: '
 &8&l[&9&lBxAuth&8&l]
-
 &7Wystąpił nieoczekiwany błąd po stronie serwera,
 &7zgłoś się to administratorowi.
 '
@@ -87,7 +85,6 @@ error-kick: '
 # it could be another client sending malicious packets
 invalid-verify-token: '
 &8&l[&9&lBxAuth&8&l]
-
 &7Nieprawidlowy token
 '
 
@@ -95,21 +92,18 @@ invalid-verify-token: '
 # account. Only modified clients would do this.
 invalid-session: '
 &8&l[&9&lBxAuth&8&l]
-
 &7Nieprawidlowa sesja
 '
 
 # The client sent a malicious packet without a login request packet
 invalid-requst: '
 &8&l[&9&lBxAuth&8&l]
-
 &7Nieprawidlowe zadanie
 '
 
 # Message if the bukkit isn't fully started to inject the packets
 not-started: '
 &8&l[&9&lBxAuth&8&l]
-
 &7Serwer nie zostal jeszcze w pelni uruchomiony.
 Prosze spróbuj ponownie
 '
@@ -118,5 +112,4 @@ Prosze spróbuj ponownie
 premium-warning: '&4UWAGA, &cjeżeli wpiszesz jeszcze raz &e/premium &ctwoje konto zostanie dodane do listy graczy premium.'
 
 # ========= Bungee/Waterfall only ================================
-
 

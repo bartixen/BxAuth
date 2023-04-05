@@ -1,0 +1,50 @@
+main: pl.bartixen.bxauth.Main
+version: 5.0.0
+author: Bartixen
+name: BxAuth
+api-version: 1.19
+website: https://bartixen.pl
+description: Plugin authentication
+depend: [FastLogin, ProtocolLib]
+
+commands:
+  login:
+    description: Login command
+  zaloguj:
+    description: Login command
+  reg:
+    description: Register an account
+  register:
+    description: Register an account
+  zarejestruj:
+    description: Register an account
+  logut:
+    description: Logout command
+  wyloguj:
+    description: Logout command
+  unregister:
+    description: Unregister an account
+  odrejestruj:
+    description: Unregister an account
+  unreg:
+    description: Unregister an account
+  auth:
+    description: Plugin information
+  bxauth:
+    description: Plugin information
+  changepass:
+    description: Change password of an account
+  changepassword:
+    description: Change password of an account
+  zmienhaslo:
+    description: Change password of an account
+  multi:
+    description: The player can create multiple accounts
+  multikonta:
+    description: The player can create multiple accounts
+  multiaccounts:
+    description: The player can create multiple accounts
+  antibot:
+    description: Enable or disable anti-bot protection
+  antybot:
+    description: Enable or disable anti-bot protection

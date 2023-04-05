@@ -1,0 +1,83 @@
+#Language in which all notifications will be sent (currently available pl / en)
+messages: pl
+
+#Whether automatic detection and logging of premium players should be enabled
+premium: true
+
+#Whether the anti-bot option should be enabled
+antibot: true
+
+#Allowed commands before logging
+allowcommands:
+  - login
+  - register
+  - reg
+  - zaloguj
+  - zarejestruj
+
+#Can the player chat before logging in
+allowChat: false
+
+#Allowed characters in the player's nickname
+allowedNicknameCharacters: '[a-zA-Z0-9_]*'
+
+#The minimum length of the player's nickname
+minNicknameLength: 3
+
+#The maximum length of the nickname of the player
+maxNicknameLength: 16
+
+#The number of maximum accounts on one ip address (this can be bypassed by /multi nick)
+maxIPregister: 1
+
+#Whether the last location of the player is to be recorded
+safelocation: true
+
+#Spawn logging
+teleportspawn:
+  #Whether this option should be enabled
+  enabled: true
+  #Spawn location
+  world: world
+  x: 0
+  y: 169
+  z: 0
+  pitch: 0
+  yaw: 0
+
+#Time for registration/login (in seconds)
+timeout: 60
+
+#Password settings
+password:
+  #The minimum length of the password
+  minlength: 5
+  #Maximum password length
+  maxlenght: 30
+  #Passwords that are blocked
+  unsafePasswords:
+    - '123456'
+    - password
+    - qwerty
+    - '12345'
+    - '54321'
+    - '123456789'
+    - help
+    - premium
+
+#The code during registration that protects against the bot
+recoveryCode:
+  #Whether this option should be enabled
+  enabled: true
+  #Length of code to rewrite
+  length: 5
+
+#Sessions that players log in automatically
+sessions:
+  #Whether this option should be enabled
+  enabled: true
+  #How many minutes should the session be active
+  timeout: 25
+
+#Sends all command and event logs to the console and file
+logs: true
