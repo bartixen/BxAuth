@@ -40,10 +40,10 @@ public class DataManager {
             } catch (IOException e) {
                 if (Main.getPlugin(Main.class).getConfig().getBoolean("logs")) {
                     if (Main.language.equals("pl")) {
-                        Bukkit.getServer().getLogger().log(Level.WARNING, "§cNie udało się utworzyć pliku §edata.yml");
-                        Logs.logDebug("Nie udało się utworzyć pliku messages_pl.yml", false);
+                        Bukkit.getServer().getLogger().log(Level.WARNING, "Nie udalo sie utworzyc pliku §edata.yml");
+                        Logs.logDebug("Nie udalo sie utworzyc pliku messages_pl.yml", false);
                     } else {
-                        Bukkit.getServer().getLogger().log(Level.WARNING, "§cFailed to create the file §edata.yml");
+                        Bukkit.getServer().getLogger().log(Level.WARNING, "Failed to create the file §edata.yml");
                         Logs.logDebug("Failed to create the file messages_pl.yml", false);
                     }
                 }
@@ -62,10 +62,10 @@ public class DataManager {
         } catch (IIOException e) {
             if (Main.getPlugin(Main.class).getConfig().getBoolean("logs")) {
                 if (Main.language.equals("pl")) {
-                    Bukkit.getServer().getLogger().log(Level.WARNING, "§cNie udało się zapisać pliku §edata.yml");
-                    Logs.logDebug("Nie udało się zapisać pliku messages_pl.yml", false);
+                    Bukkit.getServer().getLogger().log(Level.WARNING, "Nie udalo sie zapisac pliku data.yml");
+                    Logs.logDebug("Nie udalo sie zapisac pliku messages_pl.yml", false);
                 } else {
-                    Bukkit.getServer().getLogger().log(Level.WARNING, "§cFailed to save the file §edata.yml");
+                    Bukkit.getServer().getLogger().log(Level.WARNING, "Failed to save the file data.yml");
                     Logs.logDebug("Failed to save the file messages_pl.yml", false);
                 }
             }

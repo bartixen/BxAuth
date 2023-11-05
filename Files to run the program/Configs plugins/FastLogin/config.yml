@@ -20,6 +20,9 @@ anti-bot:
   connections: 600
   # Amount of minutes after the first connection got inserted will expire and made available
   expire: 10
+  # Action - Which action should be performed when the bucket is full (too many connections)
+  # Allowed values are: 'ignore' (FastLogin drops handling the player) or 'block' (block this incoming connection)
+  action: 'ignore'
 
 # Request a premium login without forcing the player to type a command
 #
@@ -53,6 +56,7 @@ respectIpLimit: true
 # If you activate this, we are remembering this player and do not force another premium authentication if the player
 # tries to join again, so the player could join as cracked player.
 secondAttemptCracked: true
+
 # New cracked players will be kicked from server. Good if you want switch from offline-mode to online-mode without
 # losing players!
 #
@@ -123,7 +127,7 @@ premiumUuid: true
 #
 # **Limitation from autoRegister**: New offline players who use the username of an existing Minecraft cannot join the
 # server.
-nameChangeCheck: true
+nameChangeCheck: false
 
 # If your players have a premium account and a skin associated to their account, this plugin
 # can download the data and set it to the online player.
@@ -150,6 +154,24 @@ forwardSkin: true
 #
 # If they still want to invoke the command, they have to invoke /premium again
 premium-warning: true
+
+# ======[[ Spigot+ProtocolLib users only ]]======
+# When set to true, enables the use of alternative session resolver which does not send the server IP
+# to mojang session servers. This setting might be useful when you are trying to run the server via a
+# transparent reverse proxy or some other form of DNAT. As far as security goes, this setting has
+# negligible to no security impact.
+#
+# This setting works on a similar principle as 'prevent-proxy' setting in server.properties.
+# When set to false, the server behaves like prevent-proxy was set to true and vice-versa.
+# Normally, when you use the prevent-proxy=true, you would want this disabled.
+#
+# Please note that this setting has no effect when used outside of Spigot+ProtocolLib context.
+#
+# !!! [WARNING] !!!
+# This option is considered highly experimental. While it is highly unlikely this will break your server,
+# more tests need to be conducted in order to verify its effectiveness. Brief tests seemed promising, but
+# every environment is different, and so it might not work for you as it did for me.
+useProxyAgnosticResolver: false
 
 # If you have autoRegister or nameChangeCheck enabled, you could be rate-limited by Mojang.
 # The requests of the both options will be only made by FastLogin if the username is unknown to the server
@@ -180,8 +202,8 @@ mojang-request-limit: 600
 # https://github.com/games647/FastLogin/issues/85
 auto-register-unknown: false
 
-# This disables the auto login from fastlogin. So a premium (like a paid account) authentication is requested, but
-# the player won't be auto logged into the account.
+# By setting this option to false, you can disable the auto login from fastlogin. So a premium (like a paid account)
+# authentication is requested, but the player won't be auto logged into the account from the auth plugin.
 #
 # This can be used as 2Factor authentication for better security of your accounts. A hacker then needs both passwords.
 # The password of your Minecraft and the password to login in with your auth plugin
@@ -214,8 +236,6 @@ autoLoginFloodgate: false
 #
 # To prevent conflicts from two different players having the same name, it is highly recommended using a
 #    'username-prefix' in floodgate/config.yml
-# Note: 'username-prefix' is currently broken when used with FastLogin and ProtocolLib.
-# A solution to this is to enable 'floodgatePrefixWorkaround' below.
 #
 # Possible values:
 #   false: Kick Bedrock players, if they are using an existing Premium Java account's name
@@ -242,26 +262,27 @@ allowFloodgateNameConflict: false
 # Enabling this might lead to people gaining unauthorized access to other's accounts!
 autoRegisterFloodgate: false
 
-# Make FastLogin inject the Floodgate name prefixes, instead of Floodgate.
-# This can fix prefixes, if you are using Floodgate alongside ProtocolLib.
-# If either of those plugins are not installed, this option will have no effect.
-# For more information visit: https://github.com/games647/FastLogin/issues/493
-# !!!!!!!! WARNING: FLOODGATE SUPPORT IS AN EXPERIMENTAL FEATURE !!!!!!!!
-# Enabling this might lead to people gaining unauthorized access to other's accounts!
-floodgatePrefixWorkaround: false
+# This option resembles the vanilla configuration option 'enforce-secure-profile' in the 'server.properties' file.
+# It verifies if the incoming cryptographic key in the login request from the player is signed by Mojang. This key
+# is necessary for servers where you or other in-game players want to verify that a chat message sent and signed by
+# this player is not modified by any third-party. Modifications by your server would also invalidate the message.
+#
+# This feature is only relevant if you use the plugin in ProtocolLib mode and use 1.19+.
+# This also the case if you don't have any proxies in use.
+verifyClientKeys: false
 
 # Database configuration
 # Recommended is the use of MariaDB (a better version of MySQL)
 
 # Single file SQLite database
-driver: 'org.sqlite.JDBC'
+driver: 'sqlite'
 # File location
 database: '{pluginDir}/FastLogin.db'
 
 # MySQL/MariaDB
-# If you want to enable it uncomment only the lines below this not this line.
-# If on velocity use 'fastlogin.mariadb.jdbc.Driver' as driver
-#driver: 'com.mysql.jdbc.Driver'
+# If you want to enable it, uncomment only the lines below; this not this line.
+# If on velocity use 'mariadb' as the driver
+#driver: 'mysql'
 #host: '127.0.0.1'
 #port: 3306
 #database: 'fastlogin'

@@ -41,7 +41,7 @@ public class AuthCommand implements CommandExecutor {
                     for (Player players : Bukkit.getOnlinePlayers()) {
                         dataplayer.reloadData(players.getUniqueId());
                     }
-                    sender.sendMessage("§cSuccessfully reloaded player files §9DATAPLAYERMANAGER");
+                    sender.sendMessage("§7Successfully reloaded player files §9DATAPLAYERMANAGER");
                     messages.reloadData();
                     sender.sendMessage("§7Successfully reloaded §9DATAMESSAGES");
                     sender.sendMessage("§8 • — • — • — • ");

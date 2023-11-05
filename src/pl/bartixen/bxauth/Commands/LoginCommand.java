@@ -43,9 +43,9 @@ public class LoginCommand implements CommandExecutor {
         if (!plugin.LoggedIn.get(uuid)) {
             if (dataplayer.getData(uuid).getBoolean("register")) {
                 if (args.length == 1) {
-                    String haslo1 = dataplayer.getData(uuid).getString("password");
-                    String haslo2 = HashPassword.tohash(args[0]);
-                    if (haslo1.equals(haslo2)) {
+                    String pass1 = dataplayer.getData(uuid).getString("password");
+                    String pass2 = HashPassword.tohash(args[0]);
+                    if (pass1.equals(pass2)) {
                         p.sendMessage(Objects.requireNonNull(messages.getData().getString("player.login")).replace("&", "§"));
                         Date now = new Date();
                         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");

@@ -207,69 +207,67 @@ public class AutoLogin implements Listener {
                             if (plugin.getConfig().getBoolean("logs")) {
                                 Logs.logDebug(Objects.requireNonNull(messages.getData().getString("logs.autologin_session")).replace("&", "§").replace("{player}", p.getDisplayName()), true);
                             }
-                            dataplayer.getData(uuid).set("lastlogin", format.format(now));
-                            try {
-                                dataplayer.saveData(uuid);
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
                             safelocation(uuid ,p);
                         } else {
                             plugin.LoggedIn.put(uuid, false);
-                            dataplayer.getData(uuid).set("notifications", true);
-                            try {
-                                dataplayer.saveData(uuid);
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                            teleportspawn(p);
+                            teleportspawn(p, uuid);
                         }
                     } else {
                         plugin.LoggedIn.put(uuid, false);
-                        dataplayer.getData(uuid).set("notifications", true);
-                        try {
-                            dataplayer.saveData(uuid);
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                        teleportspawn(p);
+                        teleportspawn(p, uuid);
                     }
                 } else {
                     plugin.LoggedIn.put(uuid, false);
-                    dataplayer.getData(uuid).set(uuid + "notifications", true);
-                    try {
-                        dataplayer.saveData(uuid);
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                    teleportspawn(p);
+                    teleportspawn(p, uuid);
                 }
             }
         }
     }
 
     public void safelocation(UUID uuid, Player p) {
-        if (plugin.getConfig().getBoolean("safelocation")) {
-            double x = dataplayer.getData(uuid).getDouble("lastlocation.x");
-            double y = dataplayer.getData(uuid).getDouble("lastlocation.y");
-            double z = dataplayer.getData(uuid).getDouble("lastlocation.z");
-            float yaw = dataplayer.getData(uuid).getInt("lastlocation.yaw");
-            float pitch = dataplayer.getData(uuid).getInt("lastlocation.pitch");
-            String world = dataplayer.getData(uuid).getString("lastlocation.world");
-            p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-        }
+        Bukkit.getScheduler().runTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (plugin.getConfig().getBoolean("safelocation")) {
+                    double x = dataplayer.getData(uuid).getDouble("lastlocation.x");
+                    double y = dataplayer.getData(uuid).getDouble("lastlocation.y");
+                    double z = dataplayer.getData(uuid).getDouble("lastlocation.z");
+                    float yaw = dataplayer.getData(uuid).getInt("lastlocation.yaw");
+                    float pitch = dataplayer.getData(uuid).getInt("lastlocation.pitch");
+                    String world = dataplayer.getData(uuid).getString("lastlocation.world");
+                    p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
+                    dataplayer.getData(uuid).set("lastlogin", format.format(now));
+                    try {
+                        dataplayer.saveData(uuid);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
-    public void teleportspawn(Player p) {
-        if (plugin.getConfig().getBoolean("teleportspawn.enabled")) {
-            double x = plugin.getConfig().getDouble("teleportspawn.x");
-            double y = plugin.getConfig().getDouble("teleportspawn.y");
-            double z = plugin.getConfig().getDouble("teleportspawn.z");
-            float yaw = plugin.getConfig().getInt("teleportspawn.yaw");
-            float pitch = plugin.getConfig().getInt("teleportspawn.pitch");
-            String world = plugin.getConfig().getString("teleportspawn.world");
-            p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
-        }
+    public void teleportspawn(Player p, UUID uuid) {
+        Bukkit.getScheduler().runTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if (plugin.getConfig().getBoolean("teleportspawn.enabled")) {
+                    double x = plugin.getConfig().getDouble("teleportspawn.x");
+                    double y = plugin.getConfig().getDouble("teleportspawn.y");
+                    double z = plugin.getConfig().getDouble("teleportspawn.z");
+                    float yaw = plugin.getConfig().getInt("teleportspawn.yaw");
+                    float pitch = plugin.getConfig().getInt("teleportspawn.pitch");
+                    String world = plugin.getConfig().getString("teleportspawn.world");
+                    p.teleport(new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch));
+                    dataplayer.getData(uuid).set("notifications", true);
+                    try {
+                        dataplayer.saveData(uuid);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     @EventHandler

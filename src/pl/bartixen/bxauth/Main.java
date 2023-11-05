@@ -10,7 +10,9 @@ import pl.bartixen.bxauth.Listeners.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Filter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 public class Main extends JavaPlugin {
 
@@ -19,7 +21,6 @@ public class Main extends JavaPlugin {
     DataPlayerManager dataplayer;
     DataMessages messages;
     DataManager data;
-    Logs logs;
 
     public CheckFile CheckFile = new CheckFile(this);
     public String version = getDescription().getVersion();
@@ -36,26 +37,26 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         language = getConfig().getString("messages");
         if ((!getDescription().getName().contains("BxAuth")) || (!getDescription().getAuthors().contains("Bartixen"))) {
-            getLogger().log(Level.WARNING, "§8[========== §9BxAuth §8==========]");
-            getLogger().log(Level.WARNING, "§cThe plugin has been disabled due to file editing §eplugin.yml");
-            getLogger().log(Level.WARNING, "§8[========== §9BxAuth §8==========]");
+            getLogger().log(Level.WARNING, "[========== BxAuth ==========]");
+            getLogger().log(Level.WARNING, "The plugin has been disabled due to file editing plugin.yml");
+            getLogger().log(Level.WARNING, "[========== BxAuth ==========]");
             Bukkit.getServer().getPluginManager().disablePlugin(this);
             if (getConfig().getBoolean("logs")) {
                 if (Main.language.equals("pl")) {
-                    Logs.logDebug("Wtyczka została wyłączona z powodu edycji pliku plugin.yml", false);
+                    Logs.logDebug("Wtyczka zostala wylaczona z powodu edycji pliku plugin.yml", false);
                 } else {
                     Logs.logDebug("The plugin has been disabled due to file editing plugin.yml", false);
                 }
             }
         } else {
-            getLogger().log(Level.INFO, "§8[========== §9BxAuth §8==========]");
-            getLogger().log(Level.INFO, "§fVersion: §b{0}", getDescription().getVersion());
-            getLogger().log(Level.INFO, "§fAuthor: §bBartixen");
-            getLogger().log(Level.INFO, "§fWebsite: §bhttps://bartixen.pl");
-            getLogger().log(Level.INFO, "§8[========== §9BxAuth §8==========]");
+            getLogger().log(Level.INFO, "[========== BxAuth ==========]");
+            getLogger().log(Level.INFO, "Version: {0}", getDescription().getVersion());
+            getLogger().log(Level.INFO, "Author: Bartixen");
+            getLogger().log(Level.INFO, "Website: https://bartixen.pl");
+            getLogger().log(Level.INFO, "[========== BxAuth ==========]");
             if (getConfig().getBoolean("logs")) {
                 if (Main.language.equals("pl")) {
-                    Logs.logDebug("Wtyczka została uruchomiona pomyślnie", false);
+                    Logs.logDebug("Wtyczka zostala uruchomiona pomyslnie", false);
                 } else {
                     Logs.logDebug("The plugin has run successfully", false);
                 }
@@ -158,7 +159,6 @@ public class Main extends JavaPlugin {
             new MultiCommand(this);
             new AuthCommand(this);
             new AntibotCommand(this);
-            new LogFilter();
 
             getServer().getPluginManager().registerEvents(new PlayerEvent(this), this);
             getServer().getPluginManager().registerEvents(new AutoLogin(this), this);
@@ -166,17 +166,18 @@ public class Main extends JavaPlugin {
             if (getServer().getPluginManager().isPluginEnabled("FastLogin")) {
                 new FastLoginHook().register();
             }
+
         }
     }
 
     @Override
     public void onDisable(){
-        getLogger().log(Level.INFO, "§8[========== §9BxAuth §8==========]");
-        getLogger().log(Level.INFO, "§fThe plug has been disabled");
-        getLogger().log(Level.INFO, "§8[========== §9BxAuth §8==========]");
+        getLogger().log(Level.INFO, "[========== BxAuth ==========]");
+        getLogger().log(Level.INFO, "The plug has been disabled");
+        getLogger().log(Level.INFO, "[========== BxAuth ==========]");
         if (getConfig().getBoolean("logs")) {
             if (Main.language.equals("pl")) {
-                Logs.logDebug("Wtyczka została wyłączona", false);
+                Logs.logDebug("Wtyczka zostala wylaczona", false);
             } else {
                 Logs.logDebug("The plug has been disabled", false);
             }
